@@ -1,5 +1,7 @@
 # InterviewPilot AI
 
+> **🏆 Best Upcoming Edition Award**  at Hackathon Weekly  
+
 ## Hackathon Project Overview
 
 InterviewPilot AI is an AI-powered mock interview simulator developed
