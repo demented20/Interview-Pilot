@@ -398,10 +398,8 @@ Displays the final interview results and visualizations.
 
 # Limitations
 
--   Speech recognition depends on browser support.
 -   Voice activity detection is a lightweight implementation.
 -   Camera and microphone processing are local browser features.
--   Audio and video are not analyzed by AI.
 -   AI responses may occasionally require JSON correction.
 
 ------------------------------------------------------------------------
@@ -424,11 +422,11 @@ Potential improvements include:
 
 This project was built by:
 
-- MADANI ALAOUI YOUNESS : Frontend Development & UI/UX, Logic
-- AIT MANNA IMANE : AI Integration & Backend
+- MADANI ALAOUI YOUNESS : Frontend Development & UI/UX, Backend 
+- AIT MANNA IMANE : Logic & AI Integration
 
 Special shout-out to **[AIT MANNA IMANE](https://github.com/ait2005manna-pixel)** for being an amazing hackathon partner! 
-## Frontend Development
+## Frontend/Backend Development
 
 Responsible for:
 
@@ -437,13 +435,13 @@ Responsible for:
 -   Dashboard design
 -   Animations
 -   Browser interactions
+-   Interview engine
 
 ## Logic and AI Integration
 
 Responsible for:
 
 -   AI communication
--   Interview engine
 -   State management
 -   Evaluation system
 -   Report generation
