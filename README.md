@@ -206,6 +206,16 @@ cd interviewpilot
 
 ## 2. Configure API Key
 
+### Getting an OpenRouter API Key
+
+InterviewPilot AI uses OpenRouter to access AI models. To obtain an API key:
+
+1. Visit [OpenRouter](https://openrouter.ai/)
+2. Sign in or create a new account
+3. Open the API Keys section
+4. Create a new API key
+5. Copy the generated key
+
 Edit:
 
     backend-config.json
@@ -218,7 +228,7 @@ Example:
     "openrouter_model": "qwen/qwen3.7-plus"
 }
 ```
-
+6. Paste it into the `openrouter_api_key` field inside `backend-config.json`
 ------------------------------------------------------------------------
 
 ## 3. Start the Server
