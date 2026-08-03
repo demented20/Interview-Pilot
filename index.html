@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InterviewPilot AI – Mock Interview Simulator</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- LANDING SCREEN -->
+    <section id="screen-landing" class="screen active">
+      <nav class="navbar">
+        <div class="logo-wrap">
+          <img src="assets/logo.svg" alt="InterviewPilot AI" class="logo" width="36" height="36" />
+          <span class="brand">InterviewPilot AI</span>
+        </div>
+      </nav>
+      <div class="hero container">
+        <div class="hero-content animate-fade-up">
+          <span class="badge badge-primary">AI-Powered Practice</span>
+          <h1>Ace Your Next Interview with AI</h1>
+          <p class="subtitle">Practice realistic mock interviews tailored to your role. Get instant, detailed feedback on every answer — completely offline.</p>
+          <button id="btn-get-started" class="btn btn-primary btn-lg" onclick="window.__goSetup && window.__goSetup()">Get Started →</button>
+        </div>
+        <div class="hero-features">
+          <div class="feature-card animate-fade-up" style="animation-delay: 0.1s">
+            <div class="feature-icon">🎯</div>
+            <h3>Role-Specific</h3>
+            <p>Questions matched to your target position and difficulty level.</p>
+          </div>
+          <div class="feature-card animate-fade-up" style="animation-delay: 0.2s">
+            <div class="feature-icon">📊</div>
+            <h3>Deep Feedback</h3>
+            <p>Scores across 5 dimensions + actionable improvement tips.</p>
+          </div>
+          <div class="feature-card animate-fade-up" style="animation-delay: 0.3s">
+            <div class="feature-icon">📈</div>
+            <h3>Progress Tracking</h3>
+            <p>Save sessions and track your improvement over time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETUP SCREEN -->
+    <section id="screen-setup" class="screen">
+      <div class="container narrow">
+        <header class="screen-header">
+          <button class="btn btn-ghost btn-sm" id="btn-back-landing">← Back</button>
+          <h2>Configure Your Interview</h2>
+          <p class="muted">Choose your target role, difficulty and interview type.</p>
+        </header>
+
+        <form id="setup-form" class="setup-form">
+          <div class="form-group">
+            <label for="position-input">Target Position</label>
+            <input id="position-input" class="input" type="text" autocomplete="off" placeholder="e.g. React Native Developer, Hotel Manager, Cybersecurity Analyst" required />
+          </div>
+
+          <div class="form-group">
+            <label>Difficulty</label>
+            <div class="btn-group" id="difficulty-group">
+              <button type="button" class="btn btn-outline difficulty-btn" data-value="easy">Easy</button>
+              <button type="button" class="btn btn-outline difficulty-btn" data-value="medium">Medium</button>
+              <button type="button" class="btn btn-outline difficulty-btn" data-value="hard">Hard</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Interview Type</label>
+            <div class="btn-group" id="type-group">
+              <button type="button" class="btn btn-outline type-btn" data-value="behavioral">Behavioral</button>
+              <button type="button" class="btn btn-outline type-btn" data-value="technical">Technical</button>
+              <button type="button" class="btn btn-outline type-btn" data-value="mixed">Mixed</button>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" id="btn-start-interview" class="btn btn-primary btn-lg" disabled>
+              Start Interview
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- INTERVIEW SCREEN -->
+    <section id="screen-interview" class="screen">
+      <div class="container interview-layout">
+        <header class="interview-header">
+          <div class="progress-wrap">
+            <div class="progress-bar">
+              <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+            </div>
+            <span id="progress-text" class="progress-text">Question 1 of 10</span>
+          </div>
+          <span id="question-category" class="badge badge-secondary">Behavioral</span>
+          <span id="question-timer" class="question-timer">02:00</span>
+        </header>
+
+        <div class="camera-panel card">
+          <div class="camera-preview">
+            <video id="camera-preview" class="camera-video" autoplay muted playsinline></video>
+            <div id="camera-placeholder" class="camera-placeholder">
+              <span class="camera-placeholder-icon">CAM</span>
+              <span>Camera off</span>
+            </div>
+          </div>
+          <div class="camera-controls">
+            <div>
+              <h3>Interview Camera</h3>
+              <p id="camera-status" class="camera-status">Use your camera to practice presence and eye contact.</p>
+            </div>
+            <button id="btn-toggle-camera" class="btn btn-outline" type="button">Start Camera</button>
+          </div>
+        </div>
+
+        <div class="question-card card">
+          <div class="question-tools">
+            <button id="btn-read-question" class="btn btn-outline btn-sm" type="button">Read Question</button>
+            <button id="btn-stop-reading" class="btn btn-ghost btn-sm" type="button">Stop Reading</button>
+          </div>
+          <h3 id="question-text" class="question-text">Loading question…</h3>
+        </div>
+
+        <div class="answer-area">
+          <label for="answer-input">Your Answer</label>
+          <textarea id="answer-input" class="input textarea" rows="6" placeholder="Type your answer here… Focus on STAR method for behavioral questions."></textarea>
+          <div class="voice-panel">
+            <button id="btn-toggle-voice" class="btn btn-outline" type="button">Start Voice</button>
+            <div class="voice-copy">
+              <p id="voice-status" class="voice-status">Speak your answer and review the transcript before submitting.</p>
+              <p id="voice-interim" class="voice-interim"></p>
+              <div class="vad-meter" aria-hidden="true">
+                <div id="vad-fill" class="vad-fill"></div>
+              </div>
+            </div>
+          </div>
+          <div class="answer-meta">
+            <span id="char-count">0 characters</span>
+            <button id="btn-submit-answer" class="btn btn-primary" disabled>Submit Answer</button>
+          </div>
+        </div>
+
+        <!-- Feedback panel (hidden until answer submitted) -->
+        <div id="feedback-panel" class="feedback-panel card hidden">
+          <div class="feedback-header">
+            <h3>Feedback</h3>
+            <div id="overall-score-badge" class="score-badge">0</div>
+          </div>
+          <div id="category-scores" class="category-scores"></div>
+          <div class="feedback-lists">
+            <div>
+              <h4>Strengths</h4>
+              <ul id="strengths-list"></ul>
+            </div>
+            <div>
+              <h4>Improvements</h4>
+              <ul id="improvements-list"></ul>
+            </div>
+          </div>
+          <button id="btn-next-question" class="btn btn-primary btn-block">Next Question →</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- REPORT / DASHBOARD SCREEN -->
+    <section id="screen-report" class="screen">
+      <div class="container">
+        <header class="screen-header">
+          <h2>Interview Report</h2>
+          <p class="muted">Here's how you performed and how to improve.</p>
+        </header>
+
+        <div class="report-grid">
+          <div class="card score-card">
+            <div class="overall-score-wrap">
+              <div id="report-overall-score" class="overall-score">0</div>
+              <span class="score-label">Overall Score</span>
+            </div>
+            <p id="report-summary-text" class="muted"></p>
+          </div>
+
+          <div class="card chart-card">
+            <h3>Category Breakdown</h3>
+            <canvas id="radar-chart" width="300" height="300"></canvas>
+          </div>
+
+          <div class="card category-list-card">
+            <h3>Detailed Scores</h3>
+            <div id="report-category-scores"></div>
+          </div>
+
+          <div class="card plan-card">
+            <h3>Improvement Plan</h3>
+            <ul id="improvement-plan"></ul>
+          </div>
+        </div>
+
+        <div class="report-actions">
+          <button id="btn-export-report" class="btn btn-outline">Export Summary</button>
+          <button id="btn-new-interview" class="btn btn-primary">Start New Interview</button>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div id="app-notifications" class="notifications" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="js/app.js"></script>
+  <script>
+    // Diagnostic: if modules fail to load (e.g. opened via file://), show a clear message
+    setTimeout(function () {
+      if (!window.__goSetup) {
+        var msg = document.createElement('div');
+        msg.style.cssText = 'position:fixed;inset:0;background:#0f172a;color:#fff;display:flex;align-items:center;justify-content:center;padding:2rem;text-align:center;z-index:9999;font-family:system-ui,sans-serif;';
+        msg.innerHTML = '<div style="max-width:480px">' +
+          '<h2 style="margin-bottom:1rem">JavaScript modules failed to load</h2>' +
+          '<p style="opacity:0.85;line-height:1.6">You are probably opening the file directly (<code>file://</code>).<br><br>' +
+          'ES modules only work over <strong>http://</strong>.<br><br>' +
+          'Fix: open a terminal in the <code>interviewpilot</code> folder and run:<br><br>' +
+          '<code style="background:#1e293b;padding:0.5rem 1rem;border-radius:6px;display:inline-block">python3 -m http.server 8080</code><br><br>' +
+          'Then visit <strong>http://localhost:8080</strong></p></div>';
+        document.body.appendChild(msg);
+      }
+    }, 1500);
+  </script>
+</body>
+</html>
