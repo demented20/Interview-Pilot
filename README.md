@@ -1,6 +1,6 @@
 # InterviewPilot AI
 
-> **🏆 Best Upcoming Edition Award**  at Hackathon Weekly  
+> **🏆 3rd Prize Award**  at Hackathon Weekly : Opus 5
 
 ## Hackathon Project Overview
 
